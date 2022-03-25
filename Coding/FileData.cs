@@ -124,18 +124,7 @@ namespace Coding
             string path = CreateFile();
             File.WriteAllText(path,data);
         }
-        //public void SaveResult(string data)
-        //{
-        //    string path = CreateFile();
-        //    List<int> toFile = new List<int>();
-            
-        //    string text = "";
-        //    foreach (int item in toFile)
-        //    {
-        //        text += item.ToString() + " ";
-        //    }
-        //    File.WriteAllText(path, "Дерево в прямой обходке: " + text);
-        //}
+       
     }
 }
 

@@ -143,14 +143,11 @@ namespace Coding
             while (isRestart);
             
         }
-        //public void MyProgram()
-        //{
-        //    Greeting();
-        //    List<int> toFile = new List<int>();
-        //    Menu m = new Menu();
-        //    WhatToDo action = m.ChoiceAction();
-        //    while (m.Action(ref action, toFile) != WhatToDo.COMPLEATE) ;
-        //}
+        public void MyProgram()
+        {
+            Greeting();
+            Action();
+        }
         public void SaveInput(string data)
         {
             FileData input = new FileData();
@@ -242,7 +239,7 @@ namespace Coding
 
         public void Greeting()
         {
-            Console.WriteLine($"Бовчурова Ирина группа 403 {Environment.NewLine} Необходимо реализовать программу для шифровки и расшифровывания,{Environment.NewLine} шифров Цезаря и гаммирования {Environment.NewLine} ");
+            Console.WriteLine($"Бовчурова Ирина группа 403 {Environment.NewLine} Необходимо реализовать программу для шифровки и расшифровки,{Environment.NewLine} шифров Цезаря и гаммирования {Environment.NewLine} ");
         }
         bool RightMenuChoice(MenuAnswer choice)
         {
