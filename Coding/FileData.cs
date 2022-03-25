@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 
 namespace Coding
@@ -124,7 +123,6 @@ namespace Coding
             string path = CreateFile();
             File.WriteAllText(path,data);
         }
-       
     }
 }
 

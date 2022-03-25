@@ -8,7 +8,6 @@ namespace Coding
         {
             Menu m = new Menu();
             m.MyProgram();
-              
         }
     }
 }
