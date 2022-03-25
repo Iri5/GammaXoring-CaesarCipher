@@ -1,6 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Coding;
-using System;
 
 namespace CodingTest
 {
