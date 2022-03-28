@@ -26,6 +26,11 @@ namespace Coding
                            return false;
                         }   
                     }
+                    else
+                    {
+                        Console.WriteLine("Файл пуст, попробуйте снова");
+                        return false;
+                    }
                 }
             }
             catch (Exception)
