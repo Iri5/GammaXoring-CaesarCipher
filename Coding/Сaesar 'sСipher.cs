@@ -20,6 +20,45 @@ namespace Coding
             string openData = Encoding.UTF8.GetString(openDataByte);
             return openData;
         }
+        public bool DecodeString(string text)
+        {
+            bool right = false;
+                Byte[] encryptedDataByte;
+                try
+                {
+                    encryptedDataByte = Input.SplitStringIntoBytes(text);
+                    right = true;
+                }
+                catch
+                {
+                    Console.WriteLine("Данные некорректны, попробуйте снова:");
+                    right = false;
+                }
+            return right;
+        }
+        public bool EncodeString(string text)
+        {
+            bool right = false;
+
+            if (string.IsNullOrWhiteSpace(text))
+            {
+                right = false;
+            }
+            else right = true;
+            return right;
+        }
+        public bool Key(string key)
+        {
+            bool right = false;
+            int number = 0;
+            if (!int.TryParse(key, out number))
+            {
+                right = false;
+            }
+            else right = true;
+            key = number.ToString();
+            return right;
+        }
         private Byte[] Coding(Byte[] data, byte key)
         {
             for (int i = 0; i < data.Length; i++)

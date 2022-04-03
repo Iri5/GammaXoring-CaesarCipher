@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Text;
-
 namespace Coding
 {
     public class GammaXoring : ICipher
@@ -21,7 +20,44 @@ namespace Coding
             String openData = Encoding.UTF8.GetString(openDataByte);
             return openData;
         }
+        public bool DecodeString(string text)
+        {
+            bool right = false;
+            Byte[] encryptedDataByte;
+            try
+            {
+                encryptedDataByte = Input.SplitStringIntoBytes(text);
+                right = true;
+            }
+            catch
+            {
+                Console.WriteLine("Данные некорректны, попробуйте снова:");
+                right = false;
+            }
+            return right;
+        }
+        public bool EncodeString(string text)
+        {
+            bool right = false;
 
+            if (string.IsNullOrWhiteSpace(text))
+            {
+                right = false;
+            }
+            else right = true;
+            return right;
+        }
+        public bool Key(string key)
+        {
+            bool right = false;
+
+            if (string.IsNullOrWhiteSpace(key))
+            {
+                right = false;
+            }
+            else right = true;
+            return right;
+        }
         private Byte[] Coding(Byte[] data, Byte[] key)
         {
             for (int i = 0; i < data.Length; i++)

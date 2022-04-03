@@ -2,16 +2,13 @@
 
 namespace Coding
 {
-
     class Menu
     {
-       
-        public void Action( )//ГЛАВНАЯ ФУНКЦИЯ
+        public void Action( )
         {
             FileData input = new FileData();
-            ICipher gamma = new GammaXoring();
-            ICipher ceaser = new СaesarsСipher();
             Menu m = new Menu();
+            ICipher icipher;
             string data = "";
             string key = "";
             bool isRestart = true;
@@ -27,50 +24,14 @@ namespace Coding
                             {
                                 case CodingType.GAMMA:
                                     {
-                                        InputType inputType = m.AskForInput();
-                                        switch (inputType)
-                                        {
-                                            case InputType.KEYBOARD:
-                                                {
-                                                    KeyForGamma(ref key);
-                                                    Console.WriteLine("Введите строку для шифрования");
-                                                    Input.KeyboardStr(ref data);
-                                                    SaveInput(data);
-                                                    break;
-                                                }
-                                            case InputType.FILE:
-                                                {
-                                                    FileInputStr(ref data);
-                                                    KeyForGamma(ref key);
-                                                    break;
-                                                }
-                                        }
-                                        string result = gamma.Encode(data, key);
-                                        Result(ref result);
+                                        icipher = new GammaXoring();
+                                        CaseEncode(icipher, ref key, ref data);
                                         break;
                                     }
                                 case CodingType.CAESAR:
                                     {
-                                        InputType inputType = m.AskForInput();
-                                        switch (inputType)
-                                        {
-                                            case InputType.KEYBOARD:
-                                                {
-                                                    KeyForCaesar(ref key);
-                                                    Console.WriteLine("Введите строку для шифрования");
-                                                    Input.KeyboardStr(ref data);
-                                                    SaveInput(data);
-                                                    break;
-                                                }
-                                            case InputType.FILE:
-                                                {
-                                                    FileInputStr(ref data);
-                                                    KeyForCaesar(ref key);
-                                                    break;
-                                                }
-                                        }
-                                        string result = ceaser.Encode(data, key);
-                                        Result(ref result);
+                                        icipher = new СaesarsСipher();
+                                        CaseEncode(icipher, ref key, ref data);
                                         break;
                                     }
                             }
@@ -83,50 +44,14 @@ namespace Coding
                             {
                                 case CodingType.GAMMA:
                                     {
-                                        InputType inputType = m.AskForInput();
-                                        switch (inputType)
-                                        {
-                                            case InputType.KEYBOARD:
-                                                {
-                                                    KeyForGamma(ref key);
-                                                    Console.WriteLine("Введите строку для расшифровки");
-                                                    Input.KeyboardStrDecode(ref data);
-                                                    SaveInput(data);
-                                                    break;
-                                                }
-                                            case InputType.FILE:
-                                                {
-                                                    FileInputDec(ref data);
-                                                    KeyForGamma(ref key);
-                                                    break;
-                                                }
-                                        }
-                                        string result = gamma.Decode(data, key);
-                                        Result(ref result);
+                                        icipher = new GammaXoring();
+                                        CaseDecode(icipher, ref key, ref data);
                                         break;
                                     }
                                 case CodingType.CAESAR:
                                     {
-                                        InputType inputType = m.AskForInput();
-                                        switch (inputType)
-                                        {
-                                            case InputType.KEYBOARD:
-                                                {
-                                                    KeyForCaesar(ref key);
-                                                    Console.WriteLine("Введите строку для расшифровки");
-                                                    Input.KeyboardStrDecode(ref data);
-                                                    SaveInput(data);
-                                                    break;
-                                                }
-                                            case InputType.FILE:
-                                                {
-                                                    FileInputDec(ref data);
-                                                    KeyForCaesar(ref key);
-                                                    break;
-                                                }
-                                        }
-                                        string result = ceaser.Decode(data, key);
-                                        Result(ref result);
+                                        icipher = new СaesarsСipher();
+                                        CaseDecode(icipher, ref key, ref data);
                                         break;
                                     }
                             }
@@ -141,6 +66,85 @@ namespace Coding
             }
             while (isRestart);
             
+        }
+        public void CaseEncode(ICipher icipher, ref string key, ref string data)
+        {
+            Menu m = new Menu();
+            InputType inputType = m.AskForInput();
+            switch (inputType)
+            {
+                case InputType.KEYBOARD:
+                    {
+                        key = KeyStr(icipher);
+                        Console.WriteLine("Введите строку для шифрования");
+                        data = EncodingStr(icipher);
+                        SaveInput(data);
+                        break;
+                    }
+                case InputType.FILE:
+                    {
+                        FileInputStr(ref data);
+                        key = KeyStr(icipher);
+                        break;
+                    }
+            }
+            string result = icipher.Encode(data, key);
+            Result(ref result);
+        }
+        
+        public void CaseDecode(ICipher icipher, ref string key, ref string data)
+        {
+            Menu m = new Menu();
+            InputType inputType = m.AskForInput();
+            switch (inputType)
+            {
+                case InputType.KEYBOARD:
+                    {
+                        key = KeyStr(icipher);
+                        Console.WriteLine("Введите строку для расшифровки");
+                        data = DecodingStr(icipher);
+                        SaveInput(data);
+                        break;
+                    }
+                case InputType.FILE:
+                    {
+                        FileInputDec(ref data);
+                        key = KeyStr(icipher);
+                        break;
+                    }
+            }
+            string result = icipher.Decode(data, key);
+            Result(ref result);
+        }
+        public string DecodingStr(ICipher icipher)
+        {
+            string data = Console.ReadLine();
+            while (!icipher.DecodeString(data))
+            {
+                data = Console.ReadLine();
+            }
+            return data;
+        }
+        public string EncodingStr(ICipher icipher)
+        {
+            string data = Console.ReadLine();
+            while (!icipher.EncodeString(data))
+            {
+                Console.WriteLine("Неверный формат! Используйте любую ненулевую строку");
+                data = Console.ReadLine();
+            }
+            return data;
+        }
+        public string KeyStr(ICipher icipher)
+        {
+            Console.WriteLine("Введите ключ:");
+            string key = Console.ReadLine();
+            while (!icipher.Key(key))
+            {
+                Console.WriteLine("Неверный формат! Для шифра цезаря используйте число, для гаммирования любую ненулевую строку");
+                key = Console.ReadLine();
+            }
+            return key;
         }
         public void MyProgram()
         {
@@ -182,16 +186,6 @@ namespace Coding
             {
                 x = input.FileInputDecode(ref data);
             }
-        }
-        public void KeyForGamma(ref string key)
-        {
-            Console.WriteLine("Введите ключ: строка");
-            Input.KeyboardStr(ref key);
-        }
-        public void KeyForCaesar(ref string key)
-        {
-            Console.WriteLine("Введите ключ: число");
-            Input.KeyboardKeyNumber(ref key);
         }
         public void Result(ref string result)
         {
