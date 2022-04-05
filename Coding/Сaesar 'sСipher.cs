@@ -55,7 +55,7 @@ namespace Coding
             {
                 right = false;
             }
-            else right = true;
+            else if (number > 0) right = true;
             key = number.ToString();
             return right;
         }

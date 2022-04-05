@@ -141,7 +141,7 @@ namespace Coding
             string key = Console.ReadLine();
             while (!icipher.Key(key))
             {
-                Console.WriteLine("Неверный формат! Для шифра цезаря используйте число, для гаммирования любую ненулевую строку");
+                Console.WriteLine("Неверный формат! Для шифра цезаря используйте положительное число, для гаммирования любую ненулевую строку");
                 key = Console.ReadLine();
             }
             return key;
